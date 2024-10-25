@@ -5,8 +5,8 @@ CREATE TABLE ();
 
 
 
-ُEmployees
-services
-bills
-products
-cutomers
+ُEmployee (id , NAME , )
+cutomers (ID , NAME )
+services (ID , NAME , PRICE)
+products (ID , NAME, PRICE)
+bills (ID , SERVICE, Employee, CUSTOMER, PRODUCT)
