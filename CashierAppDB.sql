@@ -1,12 +1,77 @@
 
-CREATE DATABASE CashierAppDB;
-USE CashierAppDB;
+CREATE DATABASE CashierApp;
+USE CashierApp;
 CREATE TABLE ();
 
 
 
-ُEmployee (id , NAME , )
-cutomers (ID , NAME )
-services (ID , NAME , PRICE)
-products (ID , NAME, PRICE)
-bills (ID , SERVICE, Employee, CUSTOMER, PRODUCT)
+CREATE TABLE Employees (
+    EmployeeID INT AUtO_INCREMENT PRIMARY KEY ,
+    FullName VARCHAR(100) NOT NULL ,
+    EmployeeRole VARCHAR(30); 
+    PhoneNumber VARCHAR(15),
+    Email VARCHAR(30),
+    Salary DECIMAL(7,2),
+    HireDate Date,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE Cutomers(
+    CustomerID INT AUtO_INCREMENT PRIMARY KEY  ,
+    CustomerName VARCHAR(50) NOT NULL , 
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE CATEGORIES(
+    CategoryID INT AUtO_INCREMENT PRIMARY KEY , 
+    NAME VARCHAR(50) NOT NULL,
+    CategoryItem VARCHAR(50)
+    );
+
+CREATE TABLE services (
+    ServiceID INT AUtO_INCREMENT PRIMARY KEY , 
+    NAME   , 
+    PRICE
+    );
+
+CREATE TABLE products(
+    ProductID INT AUtO_INCREMENT PRIMARY KEY , 
+    NAME   , 
+    PRICE
+    );
+
+CREATE TABLE ORDERS (
+    OrderID INT AUtO_INCREMENT PRIMARY KEY , 
+    SERVICE, 
+    Employee , 
+    CUSTOMER, 
+    PRODUCT, 
+    DATECREATED
+    );
+
+CREATE TABLE ORDERITEM(
+    OrderItemID INT AUtO_INCREMENT PRIMARY KEY , 
+    SERVICE, 
+    ORDERID  , 
+    QUANTITY, 
+    PRODUCT, 
+    QUANTIFIEDPRICE
+    );
+
+CREATE TABLE DISCOUNT(
+    DiscountID INT AUtO_INCREMENT PRIMARY KEY , 
+    ORDERID
+    );
+
+CREATE TABLE INVENTORIES(
+    InventoryID INT AUTO_INCREMENT PRIMARY KEY, 
+    ProductID, 
+    STOCK
+    );
+
+CREATE TABLE PAYMENTS (
+    PaymentID INT AUtO_INCREMENT PRIMARY KEY, 
+    PAYMENTTYPE, 
+    DATECREATED, 
+    ORDERID
+    );
