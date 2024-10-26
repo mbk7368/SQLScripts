@@ -36,18 +36,18 @@ CREATE TABLE Products(
     Description TEXT,
     StockQuantity INT DEFAULT 0,
     CreatedAt TIMESTAMP CURRENT_TIMESTAMP,
-    UpdatedAt TIMESTAMP CURRENT_TIMESTAMP ON UPDATE TIMESTAMP CURRENT_TIMESTAMP,
-    --References
-    FOREIGN KEY (CategoryID) REFERENCE Categories(CategoryID)
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    --REFERENCESs
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
     );
 
 CREATE TABLE Inventories (
     InventoryID INT AUTO_INCREMENT PRIMARY KEY, 
     ProductID INT NOT NULL, 
     STOCK INT DEFAULT 0,
-    UpdatedAt TIMESTAMP CURRENT_TIMESTAMP ON UPDATE TIMESTAMP CURRENT_TIMESTAMP,
-    --References
-    FOREIGN KEY (ProductID) REFERENCE Products(ProductID)
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    --REFERENCESs
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
     );
 
 CREATE TABLE Orders (
@@ -55,12 +55,12 @@ CREATE TABLE Orders (
     EmployeeID INT NOT NULL, 
     CustomerID INT NOT NULL,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PaymentStatus ENUM('Pending','Paid','Canceled') DEFAULT 'Panding',
+    PaymentStatus ENUM('Pending','Paid','Canceled') DEFAULT 'Pending',
     TotalAmount DECIMAL(9,2) NOT NULL,
     DiscountApplied DECIMAL(9,2),
-    --References
-    FOREIGN KEY (EmployeeID) REFERENCE Employees(EmployeeID),
-    FOREIGN KEY (CustomerID) REFERENCE Customers(CustomerID)
+    --REFERENCESs
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
     );
 
 CREATE TABLE OrderItems (
@@ -72,11 +72,11 @@ CREATE TABLE OrderItems (
     ItemPrice DECIMAL(9,2),
     ItemQuantity INT NOT NULL,
     ItemTotalPrice DECIMAL(9,2),
-    --References
-    FOREIGN KEY (OrderID) REFERENCE Orders(OrderID),
-    FOREIGN KEY (EmployeeID) REFERENCE Employees(EmployeeID),
-    FOREIGN KEY (CustomerID) REFERENCE Customers(CustomerID),
-    FOREIGN KEY (ProductID) REFERENCE Products(ProductID)
+    --REFERENCESs
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
     );
 
 CREATE TABLE Payments (
@@ -85,8 +85,8 @@ CREATE TABLE Payments (
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PAYMENTTYPE ENUM('Cash','Credit') DEFAULT 'Cash', 
     PaymentValue DECIMAL(9,2) NOT NULL  ,
-    --References
-    FOREIGN KEY (OrderID) REFERENCE Orders(OrderID),  
+    --REFERENCESs
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),  
     );
 
 CREATE TABLE Discounts (
@@ -94,8 +94,8 @@ CREATE TABLE Discounts (
     OrderID INT NOT NULL,
     DiscountValue DECIMAL(9,2),
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    --References
-    FOREIGN KEY (OrderID) REFERENCE Orders(OrderID),
+    --REFERENCESs
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     );
 
 CREATE TABLE Logs (
@@ -104,7 +104,7 @@ CREATE TABLE Logs (
     ActionType VARCHAR(50),
     Description TEXT,
     CreateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    --References
-    FOREIGN KEY (EmployeeID) REFERENCE Employees(EmployeeID)
+    --REFERENCESs
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
     );
 
