@@ -1,12 +1,11 @@
 
 CREATE DATABASE CashierApp;
 USE CashierApp;
-CREATE TABLE ();
 
 
 
 CREATE TABLE Employees (
-    EmployeeID INT AUtO_INCREMENT PRIMARY KEY ,
+    EmployeeID INT AUTO_INCREMENT PRIMARY KEY ,
     FullName VARCHAR(100) NOT NULL ,
     EmployeeRole VARCHAR(30); 
     PhoneNumber VARCHAR(15),
