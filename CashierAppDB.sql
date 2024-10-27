@@ -2,8 +2,6 @@
 CREATE DATABASE CashierApp;
 USE CashierApp;
 
-
-
 CREATE TABLE Employees (
     EmployeeID INT AUTO_INCREMENT PRIMARY KEY ,
     FullName VARCHAR(100) NOT NULL ,
@@ -108,3 +106,22 @@ CREATE TABLE Logs (
     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
     );
 
+-----------INSERSIONS--------------------------- 
+
+INSERT INTO Employees (FullName,EmployeeRole,PhoneNumber,Email,Salary,HireDate) VALUES ();
+
+INSERT INTO Customers(CustomerName,CutomerPhone) VALUES ();
+
+INSERT INTO Categories(NAME,CategoryDescription) VALUES ();
+
+INSERT INTO Products(NAME,PRICE,Description,StockQuantity) VALUES ();
+
+INSERT INTO Inventories (STOCK ) VALUES ();
+
+INSERT INTO Orders (PaymentStatus,TotalAmount,DiscountApplied ) VALUES ();
+
+INSERT INTO OrderItems (ItemPrice,ItemQuantity,ItemTotalPrice,) VALUES ();
+
+INSERT INTO Payments (PAYMENTTYPE,PaymentValue,) VALUES ();
+
+INSERT INTO Discounts (DiscountValue,) VALUES ();
