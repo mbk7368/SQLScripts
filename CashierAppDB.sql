@@ -5,7 +5,7 @@ USE CashierApp;
 CREATE TABLE Employees (
     EmployeeID INT AUTO_INCREMENT PRIMARY KEY ,
     FullName VARCHAR(100) NOT NULL ,
-    EmployeeRole VARCHAR(30),
+    EmployeeRole VARCHAR(30)NOT NULL,
     PhoneNumber VARCHAR(15),
     Email VARCHAR(30),
     Salary DECIMAL(7,2),
@@ -22,17 +22,17 @@ CREATE TABLE Customers(
 
 CREATE TABLE Categories(
     CategoryID INT AUTO_INCREMENT PRIMARY KEY , 
-    NAME VARCHAR(50) NOT NULL,
+    CategoryName VARCHAR(50) NOT NULL,
     CategoryDescription TEXT
     );
 
 CREATE TABLE Products(
     ProductID INT AUTO_INCREMENT PRIMARY KEY , 
-    CategoryID INT,
-    NAME  VARCHAR(50) NOT NULL, 
+    CategoryID INT NOT NULL,
+    ProductName  VARCHAR(50) NOT NULL, 
     PRICE DECIMAL(5,2) NOT NULL,
     Description TEXT,
-    StockQuantity INT DEFAULT 0,
+    StockQuantity INT DEFAULT 0 CHECK (StockQuantity >= 0),
     CreatedAt TIMESTAMP CURRENT_TIMESTAMP,
     UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     --REFERENCESs
@@ -42,7 +42,7 @@ CREATE TABLE Products(
 CREATE TABLE Inventories (
     InventoryID INT AUTO_INCREMENT PRIMARY KEY, 
     ProductID INT NOT NULL, 
-    STOCK INT DEFAULT 0,
+    Stock INT DEFAULT 0 CHECK (Stock >= 0),
     UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     --REFERENCESs
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
@@ -53,9 +53,9 @@ CREATE TABLE Orders (
     EmployeeID INT NOT NULL, 
     CustomerID INT NOT NULL,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PaymentStatus ENUM('Pending','Paid','Canceled') DEFAULT 'Pending',
-    TotalAmount DECIMAL(9,2) NOT NULL,
-    DiscountApplied DECIMAL(9,2),
+    PaymentStatus ENUM('Pending','Paid','Canceled') DEFAULT 'Pending' ,
+    TotalAmount DECIMAL(9,2) NOT NULL CHECK (TotalAmount >= 0),
+    DiscountApplied DECIMAL(9,2) DEFAULT 0 CHECK (DiscountApplied >= 0) ,
     --REFERENCESs
     FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
@@ -63,17 +63,13 @@ CREATE TABLE Orders (
 
 CREATE TABLE OrderItems (
     OrderItemID INT AUTO_INCREMENT PRIMARY KEY , 
-    EmployeeID INT NOT NULL, 
-    CustomerID INT NOT NULL,
     ProductID INT NOT NULL,
     ORDERID INT NOT NULL  , 
-    ItemPrice DECIMAL(9,2),
-    ItemQuantity INT NOT NULL,
+    ItemPrice DECIMAL(9,2) CHECK (ItemPrice >= 0),
+    ItemQuantity INT NOT NULL CHECK (ItemQuantity >= 0) ,
     ItemTotalPrice DECIMAL(9,2),
     --REFERENCESs
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
-    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
     );
 
@@ -81,8 +77,8 @@ CREATE TABLE Payments (
     PaymentID INT AUTO_INCREMENT PRIMARY KEY, 
     OrderID INT NOT NULL,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PAYMENTTYPE ENUM('Cash','Credit') DEFAULT 'Cash', 
-    PaymentValue DECIMAL(9,2) NOT NULL  ,
+    PAYMENTTYPE ENUM('Cash','Credit') NOT NULL, 
+    PaymentValue DECIMAL(9,2) NOT NULL CHECK (PaymentValue >= 0) ,
     --REFERENCESs
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),  
     );
@@ -90,7 +86,7 @@ CREATE TABLE Payments (
 CREATE TABLE Discounts (
     DiscountID INT AUTO_INCREMENT PRIMARY KEY , 
     OrderID INT NOT NULL,
-    DiscountValue DECIMAL(9,2),
+    DiscountValue DECIMAL(9,2) DEFAULT 0 CHECK (DiscountValue >= 0) ,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     --REFERENCESs
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
